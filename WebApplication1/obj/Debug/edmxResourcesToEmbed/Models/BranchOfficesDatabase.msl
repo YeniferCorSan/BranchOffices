@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BranchOfficesDatabaseModelStoreContainer" CdmEntityContainer="BranchOfficesDatabaseEntities">
+    <EntitySetMapping Name="BranchOffices">
+      <EntityTypeMapping TypeName="BranchOfficesDatabaseModel.BranchOffices">
+        <MappingFragment StoreEntitySet="BranchOffices">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="BranchOfficesDatabaseModel.Logs">
+        <MappingFragment StoreEntitySet="Logs">
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="IdBranchOffice" ColumnName="IdBranchOffice" />
+          <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+          <ScalarProperty Name="Operation" ColumnName="Operation" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="BranchOfficesDatabaseModel.Products">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SKU" ColumnName="SKU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="BranchOfficesDatabaseModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="BranchOfficesProducts" TypeName="BranchOfficesDatabaseModel.BranchOfficesProducts" StoreEntitySet="BranchOfficesProducts">
+      <EndProperty Name="BranchOffices">
+        <ScalarProperty Name="Id" ColumnName="IdBranchOffice" />
+      </EndProperty>
+      <EndProperty Name="Products">
+        <ScalarProperty Name="Id" ColumnName="IdProduct" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

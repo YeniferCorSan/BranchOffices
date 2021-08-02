@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BranchOfficesDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BranchOffices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="Address" Type="varchar" MaxLength="250" />
+    <Property Name="Telephone" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="BranchOfficesProducts">
+    <Key>
+      <PropertyRef Name="IdBranchOffice" />
+      <PropertyRef Name="IdProduct" />
+    </Key>
+    <Property Name="IdBranchOffice" Type="int" Nullable="false" />
+    <Property Name="IdProduct" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUser" Type="int" />
+    <Property Name="IdBranchOffice" Type="int" />
+    <Property Name="IdProduct" Type="int" />
+    <Property Name="Operation" Type="varchar" MaxLength="100" />
+    <Property Name="Data" Type="text" />
+    <Property Name="Date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="SKU" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="250" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="Token" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK__BranchOff__IdBra__5FB337D6">
+    <End Role="BranchOffices" Type="Self.BranchOffices" Multiplicity="1" />
+    <End Role="BranchOfficesProducts" Type="Self.BranchOfficesProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BranchOffices">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BranchOfficesProducts">
+        <PropertyRef Name="IdBranchOffice" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BranchOff__IdPro__60A75C0F">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="BranchOfficesProducts" Type="Self.BranchOfficesProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BranchOfficesProducts">
+        <PropertyRef Name="IdProduct" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Logs__IdUser__68487DD7">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Logs">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BranchOfficesDatabaseModelStoreContainer">
+    <EntitySet Name="BranchOffices" EntityType="Self.BranchOffices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BranchOfficesProducts" EntityType="Self.BranchOfficesProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__BranchOff__IdBra__5FB337D6" Association="Self.FK__BranchOff__IdBra__5FB337D6">
+      <End Role="BranchOffices" EntitySet="BranchOffices" />
+      <End Role="BranchOfficesProducts" EntitySet="BranchOfficesProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BranchOff__IdPro__60A75C0F" Association="Self.FK__BranchOff__IdPro__60A75C0F">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="BranchOfficesProducts" EntitySet="BranchOfficesProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Logs__IdUser__68487DD7" Association="Self.FK__Logs__IdUser__68487DD7">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Logs" EntitySet="Logs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

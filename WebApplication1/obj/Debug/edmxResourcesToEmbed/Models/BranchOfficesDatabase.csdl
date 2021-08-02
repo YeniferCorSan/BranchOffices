@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BranchOfficesDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BranchOffices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Products" Relationship="Self.BranchOfficesProducts" FromRole="BranchOffices" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="Int32" />
+    <Property Name="IdBranchOffice" Type="Int32" />
+    <Property Name="IdProduct" Type="Int32" />
+    <Property Name="Operation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Logs__IdUser__68487DD7" FromRole="Logs" ToRole="Users" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SKU" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="BranchOffices" Relationship="Self.BranchOfficesProducts" FromRole="Products" ToRole="BranchOffices" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Logs" Relationship="Self.FK__Logs__IdUser__68487DD7" FromRole="Users" ToRole="Logs" />
+    <Property Name="Token" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__Logs__IdUser__68487DD7">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Logs">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BranchOfficesProducts">
+    <End Role="BranchOffices" Type="Self.BranchOffices" Multiplicity="*" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="BranchOfficesDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BranchOffices" EntityType="Self.BranchOffices" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" />
+    <EntitySet Name="Products" EntityType="Self.Products" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK__Logs__IdUser__68487DD7" Association="Self.FK__Logs__IdUser__68487DD7">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Logs" EntitySet="Logs" />
+    </AssociationSet>
+    <AssociationSet Name="BranchOfficesProducts" Association="Self.BranchOfficesProducts">
+      <End Role="BranchOffices" EntitySet="BranchOffices" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

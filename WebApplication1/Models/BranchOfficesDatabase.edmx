@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BranchOfficesDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BranchOffices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="Address" Type="varchar" MaxLength="250" />
+          <Property Name="Telephone" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="BranchOfficesProducts">
+          <Key>
+            <PropertyRef Name="IdBranchOffice" />
+            <PropertyRef Name="IdProduct" />
+          </Key>
+          <Property Name="IdBranchOffice" Type="int" Nullable="false" />
+          <Property Name="IdProduct" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" />
+          <Property Name="IdBranchOffice" Type="int" />
+          <Property Name="IdProduct" Type="int" />
+          <Property Name="Operation" Type="varchar" MaxLength="100" />
+          <Property Name="Data" Type="text" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="SKU" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Token" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__BranchOff__IdBra__5FB337D6">
+          <End Role="BranchOffices" Type="Self.BranchOffices" Multiplicity="1" />
+          <End Role="BranchOfficesProducts" Type="Self.BranchOfficesProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BranchOffices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BranchOfficesProducts">
+              <PropertyRef Name="IdBranchOffice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BranchOff__IdPro__60A75C0F">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="BranchOfficesProducts" Type="Self.BranchOfficesProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BranchOfficesProducts">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Logs__IdUser__68487DD7">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BranchOfficesDatabaseModelStoreContainer">
+          <EntitySet Name="BranchOffices" EntityType="Self.BranchOffices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BranchOfficesProducts" EntityType="Self.BranchOfficesProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BranchOff__IdBra__5FB337D6" Association="Self.FK__BranchOff__IdBra__5FB337D6">
+            <End Role="BranchOffices" EntitySet="BranchOffices" />
+            <End Role="BranchOfficesProducts" EntitySet="BranchOfficesProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BranchOff__IdPro__60A75C0F" Association="Self.FK__BranchOff__IdPro__60A75C0F">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="BranchOfficesProducts" EntitySet="BranchOfficesProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Logs__IdUser__68487DD7" Association="Self.FK__Logs__IdUser__68487DD7">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BranchOfficesDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BranchOffices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.BranchOfficesProducts" FromRole="BranchOffices" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" />
+          <Property Name="IdBranchOffice" Type="Int32" />
+          <Property Name="IdProduct" Type="Int32" />
+          <Property Name="Operation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Logs__IdUser__68487DD7" FromRole="Logs" ToRole="Users" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SKU" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BranchOffices" Relationship="Self.BranchOfficesProducts" FromRole="Products" ToRole="BranchOffices" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Logs" Relationship="Self.FK__Logs__IdUser__68487DD7" FromRole="Users" ToRole="Logs" />
+          <Property Name="Token" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Logs__IdUser__68487DD7">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BranchOfficesProducts">
+          <End Role="BranchOffices" Type="Self.BranchOffices" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BranchOfficesDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BranchOffices" EntityType="Self.BranchOffices" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" />
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__Logs__IdUser__68487DD7" Association="Self.FK__Logs__IdUser__68487DD7">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="BranchOfficesProducts" Association="Self.BranchOfficesProducts">
+            <End Role="BranchOffices" EntitySet="BranchOffices" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BranchOfficesDatabaseModelStoreContainer" CdmEntityContainer="BranchOfficesDatabaseEntities">
+          <EntitySetMapping Name="BranchOffices">
+            <EntityTypeMapping TypeName="BranchOfficesDatabaseModel.BranchOffices">
+              <MappingFragment StoreEntitySet="BranchOffices">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="BranchOfficesDatabaseModel.Logs">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdBranchOffice" ColumnName="IdBranchOffice" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="BranchOfficesDatabaseModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SKU" ColumnName="SKU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BranchOfficesDatabaseModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BranchOfficesProducts" TypeName="BranchOfficesDatabaseModel.BranchOfficesProducts" StoreEntitySet="BranchOfficesProducts">
+            <EndProperty Name="BranchOffices">
+              <ScalarProperty Name="Id" ColumnName="IdBranchOffice" />
+            </EndProperty>
+            <EndProperty Name="Products">
+              <ScalarProperty Name="Id" ColumnName="IdProduct" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
